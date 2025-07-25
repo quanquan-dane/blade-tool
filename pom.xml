@@ -60,7 +60,7 @@
         <guava.version>33.4.8-jre</guava.version>
         <mica.auto.version>3.1.4</mica.auto.version>
         <lombok.version>1.18.38</lombok.version>
-        <druid.version>1.2.25</druid.version>
+        <druid.version>1.2.27</druid.version>
 
         <spring.version>6.2.8</spring.version>
         <spring.boot.version>3.5.3</spring.boot.version>
