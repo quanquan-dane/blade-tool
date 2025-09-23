@@ -24,6 +24,7 @@ import cn.idev.excel.write.builder.ExcelWriterBuilder;
 import cn.idev.excel.write.handler.WriteHandler;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.excel.listener.DataListener;
 import org.springblade.core.excel.listener.ImportListener;
 import org.springblade.core.excel.support.ExcelException;
@@ -44,6 +45,7 @@ import java.util.List;
  *
  * @author Chill
  */
+@Slf4j
 public class ExcelUtil {
 
 	/**
@@ -186,14 +188,12 @@ public class ExcelUtil {
 		if ((!StringUtils.endsWithIgnoreCase(filename, ".xls") && !StringUtils.endsWithIgnoreCase(filename, ".xlsx"))) {
 			throw new ExcelException("请上传正确的excel文件!");
 		}
-		InputStream inputStream;
-		try {
-			inputStream = new BufferedInputStream(excel.getInputStream());
+		try (InputStream inputStream = new BufferedInputStream(excel.getInputStream())) {
 			return FastExcel.read(inputStream, clazz, readListener);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("读取Excel文件失败", e);
+			return null;
 		}
-		return null;
 	}
 
 }
