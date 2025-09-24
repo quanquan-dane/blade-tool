@@ -59,7 +59,7 @@
         <disruptor.version>3.4.2</disruptor.version>
         <guava.version>33.5.0-jre</guava.version>
         <mica.auto.version>3.1.4</mica.auto.version>
-        <lombok.version>1.18.38</lombok.version>
+        <lombok.version>1.18.42</lombok.version>
         <druid.version>1.2.27</druid.version>
 
         <spring.version>6.2.10</spring.version>
