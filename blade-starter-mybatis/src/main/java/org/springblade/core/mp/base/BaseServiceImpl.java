@@ -16,11 +16,15 @@
 package org.springblade.core.mp.base;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.SneakyThrows;
+import org.springblade.core.mp.support.Condition;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.constant.BladeConstant;
@@ -28,10 +32,10 @@ import org.springblade.core.tool.utils.DateUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springframework.validation.annotation.Validated;
 
-import jakarta.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 业务封装基础类
@@ -42,6 +46,25 @@ import java.util.List;
  */
 @Validated
 public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> extends ServiceImpl<M, T> implements BaseService<T> {
+
+	@Override
+	public T queryOne(QueryWrapper<T> queryWrapper) {
+		Page<T> page = Page.of(1, 1);
+		Page<T> result = super.page(page, queryWrapper);
+		return result.getRecords().isEmpty() ? null : result.getRecords().get(0);
+	}
+
+	@Override
+	public T queryDetail(T entity) {
+		QueryWrapper<T> queryWrapper = Condition.getQueryWrapper(entity);
+		return queryWrapper.isEmptyOfWhere() ? null : super.getOne(queryWrapper);
+	}
+
+	@Override
+	public T queryDetail(Map<String, Object> entity) {
+		QueryWrapper<T> queryWrapper = Condition.getQueryWrapper(entity, getEntityClass());
+		return queryWrapper.isEmptyOfWhere() ? null : super.getOne(queryWrapper);
+	}
 
 	@Override
 	public boolean save(T entity) {
