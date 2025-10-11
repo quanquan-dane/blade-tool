@@ -86,6 +86,7 @@
         <module>blade-starter-datascope</module>
         <module>blade-starter-develop</module>
         <module>blade-starter-excel</module>
+        <module>blade-starter-i18n</module>
         <module>blade-starter-loadbalancer</module>
         <module>blade-starter-log</module>
         <module>blade-starter-mybatis</module>
@@ -221,6 +222,11 @@
             <dependency>
                 <groupId>org.springblade</groupId>
                 <artifactId>blade-starter-transaction</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-starter-i18n</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
